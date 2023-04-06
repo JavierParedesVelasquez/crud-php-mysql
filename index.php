@@ -10,7 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <style>
+        .title, .subtitle {
+            font-family: 'Titan One', cursive !important;
+        }
+
         .shade {
             box-shadow: 0 2px 10px rgb(10 5 5 / 30%);
         }
@@ -18,15 +26,27 @@
 </head>
 
 <body>
+    <script>
+        // Advertencia del boton eliminar
+        function eliminar() {
+            var resp = confirm("Are you sure you want to delete?");
+            return resp;
+        }
+    </script>
 
-    <h1 class="text-center p-3 fw-bold">Crud in php mysql</h1>
-
+    <h1 class="text-center p-3 fw-bold title text-danger">Crud in php mysql</h1>
+    <?php
+    // Llamada a la conexion
+    include 'modelo/conexion.php';
+    // Llamando a la vista eliminar
+    include 'controlador/eliminar_person.php';
+    ?>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row px-4 pb-5">
             <form class="col-3 p-3 shade" method="post">
-                <h3 class="text-center text-dark py-2">Registration of People</h3>
+                <h3 class="text-center text-dark py-2 subtitle">Registration of People</h3>
                 <?php
-                include 'modelo/conexion.php';
+
                 include 'controlador/register_person.php';
                 ?>
                 <div class="mb-3">
@@ -56,7 +76,7 @@
             <div class="col-9 p-4">
 
                 <table class="table shade">
-                    <h3 class="text-center text-dark py-2">List of people</h3>
+                    <h3 class="text-center text-dark py-2 subtitle">List of people</h3>
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -86,9 +106,11 @@
                                 <td><?= $datos->dni_person ?></td>
                                 <td><?= $datos->birthdate_person ?></td>
                                 <td><?= $datos->mail_person ?></td>
-                                <td>
-                                    <a href="#" class="btn btn-small btn-warning"><i class='bx bx-edit'></i></a>
-                                    <a href="#" class="btn btn-small btn-danger"><i class='bx bx-trash'></i></a>
+                                <td class="d-flex justify-content-center align-items-center gap-2">
+                                    <!-- Quiero que me envie un valor dentro de una variable, esta mandando todos los datos con el id -->
+                                    <a href="vista/modificar_person.php?id=<?= $datos->id_person ?>" class="btn btn-small btn-warning"><i class='bx bx-edit'></i></a>
+                                    <!-- Evento Onclick para que salga mensaje si realmente desea eliminar -->
+                                    <a onclick="return eliminar()" href="index.php?id=<?= $datos->id_person ?>" class="btn btn-small btn-danger"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         <?php
@@ -100,21 +122,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- JS Boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 
